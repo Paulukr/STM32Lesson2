@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "string.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,7 +67,9 @@ static void MX_USART2_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	char mess1[50]="Started\r\n";
+	char mess2[]="Refreshing\r\n";
+	uint8_t cntr = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -89,13 +92,18 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_UART_Transmit(&huart2, (uint8_t*)mess1, strlen(mess1), 100);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  cntr +=1;
+	  HAL_Delay(1000);
+
+	  sprintf(mess1, "%i:\r\n", cntr);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)mess1, strlen(mess1), 100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
